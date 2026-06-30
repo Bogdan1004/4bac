@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  username      String?   @unique
+  passwordHash  String
+  xp            Int       @default(0)
+  level         Int       @default(1)
+  streak        Int       @default(0)
+  lastActiveAt  DateTime?
+  createdAt     DateTime  @default(now())
+  role          String    @default("student")
+
+  submissions    Submission[]
+  badges         UserBadge[]
+  following      Follow[]          @relation("Follower")
+  followers      Follow[]          @relation("Following")
+  classesCreated Class[]
+  classMemberships ClassMember[]
+  proposals      ProblemProposal[]
+}
+
+model Problem {
+  id          String   @id @default(cuid())
+  number      Int      @unique @default(0)
+  title       String
+  slug        String   @unique
+  description String
+  difficulty  String
+  category    String
+  grade       Int      @default(9)
+  chapter     String   @default("")
+  sourceUrl   String   @default("")
+  timeLimit   Int      @default(1000)
+  memoryLimit Int      @default(256)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  testCases   TestCase[]
+  submissions Submission[]
+}
+
+model TestCase {
+  id        String  @id @default(cuid())
+  problemId String
+  input     String
+  output    String
+  points    Int     @default(10)
+  isPublic  Boolean @default(false)
+
+  problem   Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+}
+
+model Submission {
+  id          String   @id @default(cuid())
+  userId      String
+  problemId   String
+  code        String
+  language    String   @default("cpp17")
+  status      String
+  score       Int      @default(0)
+  maxScore    Int      @default(100)
+  passedTests Int      @default(0)
+  totalTests  Int      @default(0)
+  execTime    Int?
+  createdAt   DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  problem Problem @relation(fields: [problemId], references: [id])
+}
+
+model Badge {
+  id          String @id @default(cuid())
+  name        String @unique
+  description String
+  icon        String
+  condition   String
+
+  users UserBadge[]
+}
+
+model UserBadge {
+  userId    String
+  badgeId   String
+  earnedAt  DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id])
+  badge Badge @relation(fields: [badgeId], references: [id])
+
+  @@id([userId, badgeId])
+}
+
+model Class {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String   @default("")
+  createdById String
+  createdAt   DateTime @default(now())
+
+  createdBy User          @relation(fields: [createdById], references: [id])
+  members   ClassMember[]
+}
+
+model ClassMember {
+  classId  String
+  userId   String
+  joinedAt DateTime @default(now())
+
+  class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([classId, userId])
+}
+
+model Follow {
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+
+  follower  User @relation("Follower",  fields: [followerId],  references: [id], onDelete: Cascade)
+  following User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+}
+
+model ProblemProposal {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String
+  description String   @default("")
+  difficulty  String   @default("easy")
+  grade       Int      @default(9)
+  chapter     String   @default("")
+  sourceUrl   String   @default("")
+  status      String   @default("pending")
+  adminNote   String   @default("")
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

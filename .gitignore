@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# build info
+tsconfig.tsbuildinfo
+
+# database (local SQLite)
+*.db
+*.db-journal
+
+# environment variables (secrets)
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+npm-debug.log*
+
+# editor
+.vscode/
+.idea/

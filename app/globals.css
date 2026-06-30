@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/* ── Dark theme (default) ── */
+:root {
+  --bg: #0d0f14;
+  --bg-card: #13161e;
+  --bg-hover: #1a1e28;
+  --border: #1e2130;
+  --text: #e2e8f0;
+  --text-muted: #64748b;
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+  --accent-glow: rgba(99, 102, 241, 0.15);
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #f59e0b;
+  --orange: #f97316;
+  --terminal-bg: #0a0c10;
+  --terminal-text: #a8ff78;
+}
+
+/* ── Light theme ── */
+[data-theme="light"] {
+  --bg: #f0f2f7;
+  --bg-card: #ffffff;
+  --bg-hover: #e8eaf2;
+  --border: #c8ccd8;
+  --text: #111827;
+  --text-muted: #4b5563;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-glow: rgba(79, 70, 229, 0.12);
+  --green: #16a34a;
+  --red: #dc2626;
+  --yellow: #d97706;
+  --orange: #ea580c;
+  --terminal-bg: #1a1e28;
+  --terminal-text: #a8ff78;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2d3248; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3d4468; }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: #c1c5d6; }
+
+/* ── Markdown / prose ── */
+.prose-dark h2 { color: var(--text); font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem; }
+.prose-dark h3 { color: var(--text); font-size: 1rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+.prose-dark p { color: var(--text-muted); line-height: 1.75; margin-bottom: 0.6rem; }
+.prose-dark code { background: var(--bg-hover); color: #a5b4fc; padding: 2px 6px; border-radius: 4px; font-family: "Fira Code", monospace; font-size: 0.875rem; }
+.prose-dark pre { background: var(--bg-hover); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin: 0.75rem 0; overflow-x: auto; }
+.prose-dark pre code { background: transparent; padding: 0; color: var(--text); }
+.prose-dark ul, .prose-dark ol { color: var(--text-muted); padding-left: 1.5rem; margin-bottom: 0.75rem; }
+.prose-dark li { margin-bottom: 0.25rem; }
+.prose-dark strong { color: var(--text); font-weight: 600; }
+
+/* ── Math inline (from problem descriptions) ── */
+.math-inline {
+  font-family: "Fira Code", monospace;
+  font-size: 0.875em;
+  color: var(--accent-hover);
+  background: var(--accent-glow);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+.math-display {
+  display: inline-block;
+  font-family: "Fira Code", monospace;
+  font-size: 0.9em;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ── Terminal ── */
+.terminal {
+  background: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: "Fira Code", "Cascadia Code", Consolas, monospace;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  min-height: 80px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-y: auto;
+}
+.terminal .err { color: #ff6b6b; }
+.terminal .info { color: #74b9ff; }
+.terminal .ok { color: #55efc4; }
+
+/* ── Auth page orb animations ── */
+@keyframes orb-float-1 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33%       { transform: translate(50px, -40px) scale(1.08); }
+  66%       { transform: translate(-25px, 30px) scale(0.93); }
+}
+@keyframes orb-float-2 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  40%       { transform: translate(-55px, 35px) scale(1.1); }
+  75%       { transform: translate(35px, -25px) scale(0.9); }
+}
+@keyframes orb-float-3 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); opacity: 0.12; }
+  50%       { transform: translate(20px, 30px) scale(1.12); opacity: 0.22; }
+}
+
+/* ── Animations ── */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up { animation: slide-up 0.25s ease-out; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in { animation: fade-in 0.3s ease-out; }
