@@ -24,6 +24,7 @@ const GRADES = [0, 9, 10, 11, 12];
 
 const CHAPTERS_BY_GRADE: Record<number, string[]> = {
   9: [
+    "Operatori si expresii", "Structura de decizie", "Structuri repetitive",
     "Algoritmi elementari", "Prelucrarea cifrelor", "Siruri unidimensionale",
     "Siruri bidimensionale", "Subprograme", "Fisiere",
   ],
