@@ -69,7 +69,7 @@ export default function HomePage() {
       <div className="border-y py-6" style={{ borderColor: "var(--border)", background: "var(--bg-card)" }}>
         <div className="max-w-5xl mx-auto px-6 flex items-center justify-center gap-12 flex-wrap">
           {[
-            { label: "Probleme disponibile", value: "6+" },
+            { label: "Probleme disponibile", value: "16+" },
             { label: "Teste automate", value: "100%" },
             { label: "Compilator C++17", value: "Online" },
           ].map((s) => (
