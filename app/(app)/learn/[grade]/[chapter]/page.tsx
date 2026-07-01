@@ -166,7 +166,7 @@ export default async function LessonPage({ params }: PageProps) {
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              {problems.map((p) => (
+              {problems.map((p: { id: string; title: string; slug: string; difficulty: string }) => (
                 <Link
                   key={p.id}
                   href={`/problems/${p.slug}`}
