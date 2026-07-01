@@ -285,15 +285,18 @@ async function main() {
   });
 
   // Problems
+  let problemNumber = 1;
   for (const p of problems) {
     const existing = await prisma.problem.findUnique({ where: { slug: p.slug } });
     if (existing) {
       console.log(`Skip existing: ${p.title}`);
+      problemNumber++;
       continue;
     }
 
     const problem = await prisma.problem.create({
       data: {
+        number: problemNumber++,
         title: p.title,
         slug: p.slug,
         description: p.description,
