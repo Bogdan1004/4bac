@@ -19,7 +19,7 @@ export async function GET() {
   });
 
   // Check if current user is in top 10
-  const currentInTop = top10.some((u) => u.id === currentUserId);
+  const currentInTop = top10.some((u: { id: string }) => u.id === currentUserId);
 
   let currentUserRank = null;
   if (currentUserId && !currentInTop) {
